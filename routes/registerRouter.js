@@ -5,6 +5,7 @@ const router = new express.Router();
 const { sendWelcomeMail } = require("../email/mail");
 const newRegister = require("../model/newRegister");
 const newUser = require("../model/newUser");
+
 router.post("/register", async (req, res) => {
   const user = new Register({
     fullName: req.body.fname,
@@ -82,6 +83,15 @@ router.post("/new-user", async (req, res) => {
   }
 });
 
+router.get("/users-data", async (req, res) => {
+  try {
+    const users = await newRegister.find({});
+    res.send(users);
+  }
+  catch (e) {
+    res.send(e);
+  }
+})
 
 router.post("/new-login", async (req, res) => {
   try {
